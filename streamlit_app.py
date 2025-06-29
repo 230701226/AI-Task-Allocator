@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pulp import LpMaximize, LpProblem, LpVariable, lpSum, PULP_CBC_CMD, GLPK_CMD
 import os
+os.system('apt-get install -y coinor-cbc') 
 st.code("CBC Path: " + str(os.popen("which cbc").read()))
 
 
