@@ -1,34 +1,35 @@
 ####################################################################
 # 📦 AI Task Allocator — Enhanced Project Dependencies
-# Suitable for: Jupyter Notebook, Streamlit Web App, or Production
+# Suitable for: ✅ Jupyter Notebook  ✅ Streamlit Web App  ✅ Production
 ####################################################################
 
 # 🧮 Core Optimization Engine
-pulp==2.7.0            # Linear Programming solver for task assignment
+pulp==2.7.0              # 🧠 Linear Programming solver (task-to-member allocation)
 
-# 📊 Data Manipulation
-pandas==2.2.2          # Create, filter, and manage datasets
+# 📊 Data Handling & Manipulation
+pandas==2.2.2            # 🔍 Dataset processing, filtering, and merging
 
-# 📈 Visualization (used in notebook)
-matplotlib==3.8.4      # Bar charts for workload and priority tracking
+# 📈 Visualization (for Jupyter/optional Streamlit plots)
+matplotlib==3.8.4        # 📊 Workload & priority charts
 
-# 🌐 Streamlit Web App Interface
-streamlit==1.35.0      # Build a modern interactive web UI
-
-####################################################################
-# 🧠 Optional Enhancements (Commented)
-####################################################################
-
-# seaborn==0.13.2      # 🎨 Advanced and cleaner visualizations
-# openpyxl==3.1.2      # 📁 Read/write Excel (.xlsx) files
-# plotly==5.20.0       # 🌀 Interactive, animated visualizations (future use)
-# scikit-learn==1.5.0  # 🔬 Optional ML integration if expanding project scope
+# 🌐 Interactive Web UI
+streamlit==1.35.0        # 🌟 Streamlit frontend to upload files & display results
 
 ####################################################################
-# ⚙️ Notes
-# - Works with Python 3.10+ (recommended for all packages)
-# - Run using: pip install -r requirements.txt
-# - Streamlit app file: streamlit_app.py
-# - Notebook version: ai_task_allocator.ipynb
+# 🧠 Optional Enhancements (Uncomment as needed)
 ####################################################################
+
+# seaborn==0.13.2        # 🎨 Aesthetic statistical plots (optional in notebook)
+# openpyxl==3.1.2        # 📁 Excel (.xlsx) support for advanced data import/export
+# plotly==5.20.0         # 🌀 Interactive, animated graphs and dashboards
+# scikit-learn==1.5.0    # 🤖 Future ML extension (e.g., predict best task fit)
+
+####################################################################
+# ⚙️ Compatibility & Usage Notes
+# ➤ Python 3.10+ recommended
+# ➤ Run: pip install -r requirements.txt
+# ➤ Web App: streamlit run streamlit_app.py
+# ➤ Notebook: ai_task_allocator.ipynb (if using Jupyter)
+####################################################################
+
 
