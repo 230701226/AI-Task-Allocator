@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 from pulp import LpMaximize, LpProblem, LpVariable, lpSum, PULP_CBC_CMD, GLPK_CMD
+import os
+st.code("CBC Path: " + str(os.popen("which cbc").read()))
+
 
 st.set_page_config(page_title="AI Task Allocator", layout="centered")
 st.title("🤖 AI Task Allocator for Product Teams")
