@@ -1,0 +1,34 @@
+####################################################################
+# 📦 AI Task Allocator — Enhanced Project Dependencies
+# Suitable for: Jupyter Notebook, Streamlit Web App, or Production
+####################################################################
+
+# 🧮 Core Optimization Engine
+pulp==2.7.0            # Linear Programming solver for task assignment
+
+# 📊 Data Manipulation
+pandas==2.2.2          # Create, filter, and manage datasets
+
+# 📈 Visualization (used in notebook)
+matplotlib==3.8.4      # Bar charts for workload and priority tracking
+
+# 🌐 Streamlit Web App Interface
+streamlit==1.35.0      # Build a modern interactive web UI
+
+####################################################################
+# 🧠 Optional Enhancements (Commented)
+####################################################################
+
+# seaborn==0.13.2      # 🎨 Advanced and cleaner visualizations
+# openpyxl==3.1.2      # 📁 Read/write Excel (.xlsx) files
+# plotly==5.20.0       # 🌀 Interactive, animated visualizations (future use)
+# scikit-learn==1.5.0  # 🔬 Optional ML integration if expanding project scope
+
+####################################################################
+# ⚙️ Notes
+# - Works with Python 3.10+ (recommended for all packages)
+# - Run using: pip install -r requirements.txt
+# - Streamlit app file: streamlit_app.py
+# - Notebook version: ai_task_allocator.ipynb
+####################################################################
+
