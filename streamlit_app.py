@@ -2,19 +2,23 @@ import streamlit as st
 import pandas as pd
 from pulp import LpMaximize, LpProblem, LpVariable, lpSum, PULP_CBC_CMD, GLPK_CMD
 import os
-os.system('apt-get install -y coinor-cbc') 
-st.code("CBC Path: " + str(os.popen("which cbc").read()))
 
+# 💡 Install CBC on Streamlit Cloud runtime (safe fallback)
+os.system("apt-get install -y coinor-cbc")
 
+# 📍 Show solver path (for debug only)
+cbc_path = os.popen("which cbc").read().strip()
+st.code(f"CBC Solver Path: {cbc_path if cbc_path else 'Not found'}")
+
+# 🎯 Page Config
 st.set_page_config(page_title="AI Task Allocator", layout="centered")
 st.title("🤖 AI Task Allocator for Product Teams")
 st.markdown("Match tasks to team members based on skills, workload, and priorities using smart optimization. 🚀")
 
+# 📤 Upload Section
 st.sidebar.header("📄 Upload Inputs")
-
-# Upload task CSV
-task_file = st.sidebar.file_uploader("Upload Task CSV", type=["csv"])
-member_file = st.sidebar.file_uploader("Upload Team Skills CSV", type=["csv"])
+task_file = st.sidebar.file_uploader("📋 Upload Task CSV", type=["csv"])
+member_file = st.sidebar.file_uploader("👥 Upload Team Skills CSV", type=["csv"])
 
 if task_file and member_file:
     tasks = pd.read_csv(task_file)
@@ -26,37 +30,44 @@ if task_file and member_file:
     st.subheader("👥 Team Members & Skills")
     st.dataframe(skills_df)
 
-    # Map skills into dict
+    # 🔄 Map members and skills
     skills = skills_df.groupby("Member")["Skill"].apply(list).to_dict()
     members = list(skills.keys())
 
+    # 🧠 Define LP model
     model = LpProblem("TaskAssignment", LpMaximize)
 
-    # Decision variables
+    # 📌 Decision Variables
     x = LpVariable.dicts("assign", ((t, m) for t in tasks['Task'] for m in members), cat="Binary")
 
-    # Objective: Maximize total priority
-    model += lpSum(x[t, m] * tasks.loc[tasks['Task'] == t, 'Priority'].values[0]
-                   for t in tasks['Task'] for m in members if tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0] in skills[m])
+    # 🎯 Objective: Maximize total priority
+    model += lpSum(
+        x[t, m] * tasks.loc[tasks['Task'] == t, 'Priority'].values[0]
+        for t in tasks['Task'] for m in members
+        if tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0] in skills[m]
+    )
 
-    # Constraints: Each task to at most one qualified member
+    # 📏 Constraint: Each task to at most one qualified member
     for t in tasks['Task']:
         required_skill = tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0]
         model += lpSum(x[t, m] for m in members if required_skill in skills[m]) <= 1
 
-    # Max workload per member (12 hours)
+    # ⏱️ Constraint: Member workload ≤ 12 hours
     for m in members:
-        model += lpSum(x[t, m] * tasks.loc[tasks['Task'] == t, 'Estimated_Hours'].values[0]
-                       for t in tasks['Task'] if tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0] in skills[m]) <= 12
+        model += lpSum(
+            x[t, m] * tasks.loc[tasks['Task'] == t, 'Estimated_Hours'].values[0]
+            for t in tasks['Task'] if tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0] in skills[m]
+        ) <= 12
 
-    # Solve with CBC first, fallback to GLPK if needed
+    # ⚙️ Solver with fallback
     try:
         result = model.solve(PULP_CBC_CMD(msg=0))
     except:
         st.warning("⚠️ CBC solver failed, trying GLPK fallback...")
         result = model.solve(GLPK_CMD(msg=0))
 
-    st.subheader("🧙‍♂️ Task Assignments")
+    # 📦 Show output
+    st.subheader("🧩 Task Assignments")
     if result == 1:
         assigned = []
         for t in tasks['Task']:
@@ -67,7 +78,6 @@ if task_file and member_file:
         st.success("✅ Optimization Complete!")
         st.dataframe(df_assigned)
     else:
-        st.error("❌ Infeasible allocation — check if team has the required skills or enough time.")
-
+        st.error("❌ Infeasible allocation — team may lack skills or be overloaded.")
 else:
     st.warning("📥 Please upload both task and skill CSV files to begin.")
