@@ -13,8 +13,8 @@ pandas==2.2.2            # 🔍 Dataset processing, filtering, and merging
 matplotlib==3.8.4        # 📊 Workload & priority charts
 
 # 🌐 Interactive Web UI
-streamlit==1.35.0        # 🌟 Streamlit frontend to upload files & display results
-altair==4.2.2            # ⚠️ Required by Streamlit internally (for plotting backend)
+streamlit==1.27.2        # 🌟 Streamlit frontend to upload files & display results
+
 
 ####################################################################
 # 🧠 Optional Enhancements (Uncomment as needed)
