@@ -5,11 +5,6 @@ import os
 
 # 💡 Install CBC on Streamlit Cloud runtime (safe fallback)
 os.system("apt-get install -y coinor-cbc")
-
-# 📍 Show solver path (for debug only)
-cbc_path = os.popen("which cbc").read().strip()
-st.code(f"CBC Solver Path: {cbc_path if cbc_path else 'Not found'}")
-
 # 🎯 Page Config
 st.set_page_config(page_title="AI Task Allocator", layout="centered")
 st.title("🤖 AI Task Allocator for Product Teams")
