@@ -1,0 +1,7 @@
+Task,Required_Skill,Estimated_Hours,Priority
+REST API Dev,Flask,6,5
+UI Setup,React,5,4
+Database Design,SQL,7,5
+Data Analysis,Pandas,6,4
+ML Model Training,ML,10,5
+UX Audit,Design,3,3
