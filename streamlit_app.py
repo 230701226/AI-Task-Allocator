@@ -54,12 +54,9 @@ if task_file and member_file:
             for t in tasks['Task'] if tasks.loc[tasks['Task'] == t, 'Required_Skill'].values[0] in skills[m]
         ) <= 12
 
-    # ⚙️ Solver with fallback
-    try:
-        result = model.solve(PULP_CBC_CMD(msg=0))
-    except:
-        st.warning("⚠️ CBC solver failed, trying GLPK fallback...")
-        result = model.solve(GLPK_CMD(msg=0))
+    # ⚙️ Use GLPK Solver (Stable for Streamlit Cloud)
+    result = model.solve(GLPK_CMD(msg=0))
+
 
     # 📦 Show output
     st.subheader("🧩 Task Assignments")
